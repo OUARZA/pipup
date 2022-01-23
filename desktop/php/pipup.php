@@ -131,7 +131,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 
 
-            <!-- Onglet Sonde -->
+            <!-- Onglet Info -->
             <div role="tabpanel" class="tab-pane" id="infotab">
                 <br>
                 <div class="row">
@@ -164,7 +164,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     </div>
                 </div>
                 <hr>
-            </div><!-- /.tabpanel #sondetab-->
+            </div><!-- /.tabpanel #infotab-->
 
             <!-- Onglet des commandes de l'équipement -->
             <div role="tabpanel" class="tab-pane" id="commandtab">

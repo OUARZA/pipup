@@ -74,6 +74,21 @@ class pipup extends eqLogic
         $notify->setSubType('other');
         $notify->save();
         unset($notify);
+
+        // alerte
+        $alert = $this->getCmd(null, 'alert');
+        if (!is_object($alert)) {
+            $alert = new pipupCmd();
+            $alert->setLogicalId('alert');
+            $alert->setIsVisible(1);
+            $alert->setName(__('alert', __FILE__));
+            $alert->setOrder(1);
+        }
+        $alert->setEqLogic_id($this->getId());
+        $alert->setType('action');
+        $alert->setSubType('other');
+        $alert->save();
+        unset($alert);
     }
 
     public function preUpdate()
@@ -181,10 +196,10 @@ class pipupCmd extends cmd
         return $configuration;
     }
 
-    private function action($configuration) {
+    private function action($configuration, $_options, $type='notify') {
 
         $titleColor = "#ff0000";
-        $title = "Informations !";
+        //$title = "Notification";
         $message = "Il faut penser à sortir la poubelle !";
         $position = 2;
         $titleSize = 20;
@@ -192,6 +207,23 @@ class pipupCmd extends cmd
         $messageSize = 14;
         $backgroundColor = "#ffffff";
         $media = "https://www.fenetre24.com/fileadmin/images/fr/porte-fenetre/pvc/lightbox/double-porte-fenetre.jpg";
+
+        switch ($type) {
+            case 'notify':
+                $title = 'Notification';
+                $titleColor = "#000000";
+                $media = 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png';
+                break;
+            case 'alert':
+                $title = 'Alerte';
+                $titleColor = "#ff0000";
+                $media ='https://www.pinclipart.com/picdir/big/94-941341_open-animated-gif-alert-icon-clipart.png';
+                break;
+            default:
+                $title = 'Titre';
+                break;
+        }
+
 
         $tmp = new stdClass();
         $tmp->duration= $configuration->duration;
@@ -245,17 +277,19 @@ class pipupCmd extends cmd
     {
         log::add('pipup', 'info', ' **** execute ****'.$this->getLogicalId(), __FILE__);
 
+        $eqlogic = $this->getEqLogic(); //récupère l'éqlogic de la commande $this
+        log::add('pipup', 'info', ' Objet : ' . $eqlogic->getName(), __FILE__);
+
+        // Lecture et Analyse de la configuration
+        $configuration = $this->getMyConfiguration();
+        log::add('pipup', 'debug', ' configuration :' . json_encode((array)$configuration));
+
         switch ($this->getLogicalId()) {
-            case 'notify': // LogicalId de la commande rafraîchir que l’on a créé dans la méthode Postsave de la classe vdm .                                 
-                $eqlogic = $this->getEqLogic(); //récupère l'éqlogic de la commande $this
-                log::add('pipup', 'info', ' Objet : ' . $eqlogic->getName(), __FILE__);
-
-                // Lecture et Analyse de la configuration
-                $configuration = $this->getMyConfiguration();
-                log::add('pipup', 'debug', ' configuration :' . json_encode((array)$configuration));
-
-                $this->action($configuration);
-
+            case 'notify': 
+                $this->action($configuration, $_options, 'notify');
+                break;
+            case 'alert':
+                $this->action($configuration, $_options, 'alert');
                 break;
         }
     }

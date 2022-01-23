@@ -18,19 +18,19 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-// Fonction exécutée automatiquement après l'installation du plugin
-function windows_install() {
+// Fonction exÃ©cutÃ©e automatiquement aprÃ¨s l'installation du plugin
+function pipup_install() {
 
 }
 
-// Fonction exécutée automatiquement après la mise à jour du plugin
-function windows_update() {
+// Fonction exÃ©cutÃ©e automatiquement aprÃ¨s la mise Ã  jour du plugin
+function pipup_update() {
 
 }
 
 
-// Fonction exécutée automatiquement après la suppression du plugin
-function windows_remove() {
+// Fonction exÃ©cutÃ©e automatiquement aprÃ¨s la suppression du plugin
+function pipup_remove() {
     
 }
 

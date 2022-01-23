@@ -43,10 +43,10 @@ function addCmdToTable(_cmd) {
 
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom de la commande}}">';
   tr += '</td>';
-  tr += '<td>';
-  tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span>';
-  tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span>';
-  tr += '</td>';
+  // tr += '<td>';
+  // tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span>';
+  // tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span>';
+  // tr += '</td>';
   tr += '<td>';
   if (is_numeric(_cmd.id)) {
      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
@@ -85,99 +85,99 @@ $(".eqLogic").delegate(".listCmdInfo", 'click', function () {
   });
 });
 
-// ***** Windows ****************
+// ***** Pipups ****************
 /**
  * Bouton Ajout d'une ouverture
  */
-$('#bt_addWindowEqLogic').on('click', function () {
-  addConfWindows({});
-});
+// $('#bt_addPipupEqLogic').on('click', function () {
+//   addConfPipups({});
+// });
 
-$('#bt_addWindowCmd').on('click', function() {
-  addCmdToTable({
-    configuration: {
-      period: 1
-    }
-  });
-});
+// $('#bt_addPipupCmd').on('click', function() {
+//   addCmdToTable({
+//     configuration: {
+//       period: 1
+//     }
+//   });
+// });
 
-$("#div_confWindows").delegate('.bt_removeConfWindow', 'click', function () {
-  $(this).closest('.confWindow').remove();
-});
+// $("#div_confPipups").delegate('.bt_removeConfPipup', 'click', function () {
+//   $(this).closest('.confPipup').remove();
+// });
 
-function addConfWindows(_window) {
-  if (!isset(_window)) {
-    _window = {};
-  }
-  console.log("addConfWindows", _window);
-  var div = '<div class="confWindow">';
+// function addConfPipups(_Pipup) {
+//   if (!isset(_Pipup)) {
+//     _Pipup = {};
+//   }
+//   console.log("addConfPipups", _Pipup);
+//   var div = '<div class="confPipup">';
 
-  div += '<div class="form-group">';
-  div += '<label class="col-sm-3 control-label">{{Ouverture}}</label>';
-  div += '<div class="col-sm-7">';
-  div += '<div class="input-group">';
-  div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default bt_removeConfWindow roundedLeft" data-type=""><i class="fas fa-minus-circle"></i></a>';
-  div += '</span>';
-  div += '<input class="eqLogicAttr form-control expressionAttr tooltips" data-l1key="cmd" data-type="window"/>';
-  div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default listCmdInfo"><i class="fa fa-list-alt"></i></a>';
-  div += '</span>';
-  div += '</div>';
-  div += '</div>';
-  div += '<div class="col-sm-1">';
-  div += '<label class="checkbox-inline"><input type="checkbox" class="expressionAttr cmdInfo" data-l1key="invert"/>{{Inverser}}</label></span>';
-  div += '</div>';
-  div += '</div>';
+//   div += '<div class="form-group">';
+//   div += '<label class="col-sm-3 control-label">{{Ouverture}}</label>';
+//   div += '<div class="col-sm-7">';
+//   div += '<div class="input-group">';
+//   div += '<span class="input-group-btn">';
+//   div += '<a class="btn btn-default bt_removeConfPipup roundedLeft" data-type=""><i class="fas fa-minus-circle"></i></a>';
+//   div += '</span>';
+//   div += '<input class="eqLogicAttr form-control expressionAttr tooltips" data-l1key="cmd" data-type="Pipup"/>';
+//   div += '<span class="input-group-btn">';
+//   div += '<a class="btn btn-default listCmdInfo"><i class="fa fa-list-alt"></i></a>';
+//   div += '</span>';
+//   div += '</div>';
+//   div += '</div>';
+//   div += '<div class="col-sm-1">';
+//   div += '<label class="checkbox-inline"><input type="checkbox" class="expressionAttr cmdInfo" data-l1key="invert"/>{{Inverser}}</label></span>';
+//   div += '</div>';
+//   div += '</div>';
 
-  div += '</div>';
-  $('#div_confWindows').append(div);
-  $('#div_confWindows').find('.confWindow:last').setValues(_window, '.expressionAttr');
-}
+//   div += '</div>';
+//   $('#div_confPipups').append(div);
+//   $('#div_confPipups').find('.confPipup:last').setValues(_Pipup, '.expressionAttr');
+// }
 
 
 // **** Action ************
 /**
  * Bouton Ajout d'une action
  */
-$('#bt_addActionEqLogic').on('click', function () {
-  addConfActions({});
-});
+// $('#bt_addActionEqLogic').on('click', function () {
+//   addConfActions({});
+// });
 
-$("#div_confActions").delegate('.bt_removeConfAction', 'click', function () {
-  $(this).closest('.confAction').remove();
-});
+// $("#div_confActions").delegate('.bt_removeConfAction', 'click', function () {
+//   $(this).closest('.confAction').remove();
+// });
 
-function addConfActions(_action) {
-  if (!isset(_action)) {
-    _action = {};
-  }
-  if (!isset(_action.options)) {
-    _action.options = {}
-  }
-  // console.log("addConfActions", _action);
-  var div = '<div class="confAction">';
-  div += '<div class="form-group">';
-  div += '<label class="col-sm-1 control-label">{{Action}}</label>';
-  div += '<div class="col-sm-4">';
-  div += '<div class="input-group">';
-  div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default bt_removeConfAction btn-sm roundedLeft" data-type=""><i class="fas fa-minus-circle"></i></a>';
-  div += '</span>';
-  div += '<input class="expressionAttr form-control input-sm cmdAction" data-l1key="cmd" data-type="action" />';
-  div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default btn-sm listAction" data-type="confAction" title="{{Sélectionner un mot-clé}}"><i class="fas fa-tasks"></i></a>';
-  div += '<a class="btn btn-default btn-sm listCmdAction roundedRight" data-type="confAction" title="{{Sélectionner la commande}}"><i class="fas fa-list-alt"></i></a>';
-  div += '</span>';
-  div += '</div>';
-  div += '</div>';
-  div += '<div class="col-sm-7 actionOptions">';
-  div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
-  div += '</div>';
-  div += '</div>';
-  $('#div_confActions').append(div);
-  $('#div_confActions').find('.confAction:last').setValues(_action, '.expressionAttr');
-}
+// function addConfActions(_action) {
+//   if (!isset(_action)) {
+//     _action = {};
+//   }
+//   if (!isset(_action.options)) {
+//     _action.options = {}
+//   }
+//   // console.log("addConfActions", _action);
+//   var div = '<div class="confAction">';
+//   div += '<div class="form-group">';
+//   div += '<label class="col-sm-1 control-label">{{Action}}</label>';
+//   div += '<div class="col-sm-4">';
+//   div += '<div class="input-group">';
+//   div += '<span class="input-group-btn">';
+//   div += '<a class="btn btn-default bt_removeConfAction btn-sm roundedLeft" data-type=""><i class="fas fa-minus-circle"></i></a>';
+//   div += '</span>';
+//   div += '<input class="expressionAttr form-control input-sm cmdAction" data-l1key="cmd" data-type="action" />';
+//   div += '<span class="input-group-btn">';
+//   div += '<a class="btn btn-default btn-sm listAction" data-type="confAction" title="{{Sélectionner un mot-clé}}"><i class="fas fa-tasks"></i></a>';
+//   div += '<a class="btn btn-default btn-sm listCmdAction roundedRight" data-type="confAction" title="{{Sélectionner la commande}}"><i class="fas fa-list-alt"></i></a>';
+//   div += '</span>';
+//   div += '</div>';
+//   div += '</div>';
+//   div += '<div class="col-sm-7 actionOptions">';
+//   div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
+//   div += '</div>';
+//   div += '</div>';
+//   $('#div_confActions').append(div);
+//   $('#div_confActions').find('.confAction:last').setValues(_action, '.expressionAttr');
+// }
 
 $(".eqLogic").delegate(".listCmdAction", 'click', function () {
     //console.log("--------- listCmdAction");
@@ -213,7 +213,7 @@ function saveEqLogic(_eqLogic) {
   if (!isset(_eqLogic.configuration)) {
     _eqLogic.configuration = {};
   }
-  _eqLogic.configuration.window = $('#div_confWindows .confWindow').getValues('.expressionAttr');
+  _eqLogic.configuration.Pipup = $('#div_confPipups .confPipup').getValues('.expressionAttr');
   _eqLogic.configuration.action = $('#div_confActions .confAction').getValues('.expressionAttr');
 
   console.log('saveEqLogic:', _eqLogic);
@@ -223,12 +223,12 @@ function saveEqLogic(_eqLogic) {
 function printEqLogic(_eqLogic) {
   console.log('printEqLogic:', _eqLogic);
 
-  $('#div_confWindows').empty();
+  $('#div_confPipups').empty();
   if (isset(_eqLogic.configuration)) {
-    if (isset(_eqLogic.configuration.window)) {
-      for (var i in _eqLogic.configuration.window) {
-        console.log("printEqLogic.addConfWindows", _eqLogic.configuration.window[i]);
-        addConfWindows(_eqLogic.configuration.window[i]);
+    if (isset(_eqLogic.configuration.Pipup)) {
+      for (var i in _eqLogic.configuration.Pipup) {
+        console.log("printEqLogic.addConfPipups", _eqLogic.configuration.Pipup[i]);
+        addConfPipups(_eqLogic.configuration.Pipup[i]);
       }
     }
   }
@@ -246,10 +246,10 @@ function printEqLogic(_eqLogic) {
 
 
 // Sondes triables
-$("#div_confWindows").sortable({
+$("#div_confPipups").sortable({
   axis: "y",
   cursor: "move",
-  items: ".confWindow",
+  items: ".confPipup",
   placeholder: "ui-state-highlight",
   tolerance: "intersect",
   forcePlaceholderSize: true

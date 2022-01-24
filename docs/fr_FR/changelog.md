@@ -7,3 +7,7 @@
 # 23/01/2022
 
 - Première version
+
+# 24/01/2022
+
+- Gestion du type Message

@@ -56,10 +56,8 @@ class pipup extends eqLogic
     public function postSave()
     {
         // pipup_action
-
         log::add('pipup', 'debug', 'postSave');
 
-    
         // notify
         $notify = $this->getCmd(null, 'notify');
         if (!is_object($notify)) {
@@ -71,7 +69,7 @@ class pipup extends eqLogic
         }
         $notify->setEqLogic_id($this->getId());
         $notify->setType('action');
-        $notify->setSubType('other');
+        $notify->setSubType('message');
         $notify->save();
         unset($notify);
 
@@ -86,7 +84,7 @@ class pipup extends eqLogic
         }
         $alert->setEqLogic_id($this->getId());
         $alert->setType('action');
-        $alert->setSubType('other');
+        $alert->setSubType('message');
         $alert->save();
         unset($alert);
     }
@@ -196,11 +194,11 @@ class pipupCmd extends cmd
         return $configuration;
     }
 
-    private function action($configuration, $_options, $type='notify') {
+    private function action($configuration, $options, $type='notify') {
 
         $titleColor = "#ff0000";
-        //$title = "Notification";
-        $message = "Il faut penser à sortir la poubelle !";
+        // $title = "Notification";
+        // $message = "Il faut penser à sortir la poubelle !";
         $position = 2;
         $titleSize = 20;
         $messageColor = "#000000";
@@ -210,20 +208,21 @@ class pipupCmd extends cmd
 
         switch ($type) {
             case 'notify':
-                $title = 'Notification';
+                // $title = 'Notification';
                 $titleColor = "#000000";
                 $media = 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png';
                 break;
             case 'alert':
-                $title = 'Alerte';
+                // $title = 'Alerte';
                 $titleColor = "#ff0000";
                 $media ='https://www.pinclipart.com/picdir/big/94-941341_open-animated-gif-alert-icon-clipart.png';
                 break;
             default:
-                $title = 'Titre';
+                // $title = 'Titre';
                 break;
         }
-
+        $title = $options['title'];
+        $message = $options['message'];
 
         $tmp = new stdClass();
         $tmp->duration= $configuration->duration;

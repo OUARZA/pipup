@@ -175,6 +175,7 @@ class pipupCmd extends cmd
             log::add('pipup', 'error', ' Pas de iptv', __FILE__);
             return;
         }
+        unset($iptv);
 
         // IP TV
         log::add('pipup', 'debug', ' Récupération duration', __FILE__);
@@ -190,6 +191,55 @@ class pipupCmd extends cmd
         } else {
             $configuration->duration = 30;
         }
+        unset($duration);
+
+        // Position
+        log::add('pipup', 'debug', ' Récupération position', __FILE__);
+        $position = $eqlogic->getConfiguration('position');
+        if ($position != '') {
+            if(filter_var($position, FILTER_VALIDATE_INT))
+            {
+                $configuration->position = $position;
+            } else {
+                log::add('pipup', 'error', ' Mauvaise valeur de position : '. $position, __FILE__);
+                return; 
+            }
+        } else {
+            $configuration->position = 2; // BottomRight
+        }
+        unset($position);
+
+        // titleSize
+        log::add('pipup', 'debug', ' Récupération titleSize', __FILE__);
+        $titleSize = $eqlogic->getConfiguration('titleSize');
+        if ($titleSize != '') {
+            if(filter_var($titleSize, FILTER_VALIDATE_INT))
+            {
+                $configuration->titleSize = $titleSize;
+            } else {
+                log::add('pipup', 'error', ' Mauvaise valeur de titleSize : '. $titleSize, __FILE__);
+                return; 
+            }
+        } else {
+            $configuration->titleSize = 20;
+        }
+        unset($titleSize);
+        
+        // messageSize
+        log::add('pipup', 'debug', ' Récupération messageSize', __FILE__);
+        $messageSize = $eqlogic->getConfiguration('messageSize');
+        if ($messageSize != '') {
+            if(filter_var($messageSize, FILTER_VALIDATE_INT))
+            {
+                $configuration->messageSize = $messageSize;
+            } else {
+                log::add('pipup', 'error', ' Mauvaise valeur de messageSize : '. $messageSize, __FILE__);
+                return; 
+            }
+        } else {
+            $configuration->messageSize = 14;
+        }
+        unset($messageSize);
 
         return $configuration;
     }
@@ -197,12 +247,7 @@ class pipupCmd extends cmd
     private function action($configuration, $options, $type='notify') {
 
         $titleColor = "#ff0000";
-        // $title = "Notification";
-        // $message = "Il faut penser à sortir la poubelle !";
-        $position = 2;
-        $titleSize = 20;
         $messageColor = "#000000";
-        $messageSize = 14;
         $backgroundColor = "#ffffff";
         $media = "https://www.fenetre24.com/fileadmin/images/fr/porte-fenetre/pvc/lightbox/double-porte-fenetre.jpg";
 
@@ -225,14 +270,21 @@ class pipupCmd extends cmd
         $message = $options['message'];
 
         $tmp = new stdClass();
+        // Paramétrage Generique
         $tmp->duration= $configuration->duration;
-        $tmp->position = $position;
+        $tmp->position = $configuration->position;
+        $tmp->titleSize = $configuration->titleSize;
+        $tmp->messageSize = $configuration->messageSize;
+
+        // Paramètre Action
         $tmp->title = $title;
-        $tmp->titleColor = $titleColor;
-        $tmp->titleSize = $titleSize;
         $tmp->message = $message;
+
+        // Paramétrage Commande
+        $tmp->titleColor = $titleColor;        
         $tmp->messageColor = $messageColor;
-        $tmp->messageSize = $messageSize;
+
+        // Fixe
         $tmp->backgroundColor = $backgroundColor;
 
         $image = new stdClass();
@@ -261,9 +313,14 @@ class pipupCmd extends cmd
         $tuData = curl_exec($tuCurl);
         if(!curl_errno($tuCurl)) {
             $info = curl_getinfo($tuCurl);
-            log::add('pipup', 'info', 'Took ' . $info['total_time'] . ' seconds to send a request to ' . $info['url'], __FILE__);
-            log::add('pipup', 'debug', ' data : ' . $tuData, __FILE__);
+            // log::add('pipup', 'info', 'info : ' . json_encode($info), __FILE__);
 
+            if ($info["http_code"] == 200) {
+                log::add('pipup', 'info', 'Took ' . $info['total_time'] . ' seconds to send a request to ' . $info['url'], __FILE__);
+                log::add('pipup', 'debug', ' data : ' . $tuData, __FILE__);
+            } else {
+                log::add('pipup', 'error', ' data : ' . $tuData, __FILE__);
+            }
         } else {
             log::add('pipup', 'error', curl_error($tuCurl), __FILE__);
         }

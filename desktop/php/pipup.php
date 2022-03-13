@@ -151,11 +151,47 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{Duration (s)}}</label>
-                                    (default=30)
+                                    <label class="col-sm-3 control-label">{{Duration (secondes)}}</label>
                                     <div class="col-sm-2">
                                         <div class="input-group">
-                                            <input type="number" class="eqLogicAttr form-control tooltips" data-l1key="configuration" data-l2key="duration" data-concat="1" />
+                                            <input type="number" class="eqLogicAttr form-control tooltips" 
+                                            placeholder="30"
+                                            data-l1key="configuration" data-l2key="duration" data-concat="1" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Position}}</label>
+                                    <div class="col-sm-4">
+                                        <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="position"  data-concat="1" >
+                                            <option value="0">{{Haut Droite}}</option>
+                                            <option value="1">{{Haut Gauche}}</option>
+                                            <option value="2">{{Bas Droite}}</option>
+                                            <option value="3">{{Bas Gauche}}</option>
+                                            <option value="4">{{Centre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Taille du titre}}</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <input type="number" class="eqLogicAttr form-control tooltips"
+                                                placeholder="20" 
+                                                data-l1key="configuration" data-l2key="titleSize" data-concat="1" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Taille du message}}</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <input type="number" class="eqLogicAttr form-control tooltips"
+                                                placeholder="14" 
+                                                data-l1key="configuration" data-l2key="messageSize" data-concat="1" />
                                         </div>
                                     </div>
                                 </div>
@@ -173,9 +209,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     <table id="table_cmd" class="table table-bordered table-condensed">
                         <thead>
                             <tr>
-                                <th>{{Nom}}</th>
-                                <!-- <th>{{Options}}</th> -->
-                                <th>{{Action}}</th>
+                                <th style="width:210px;">{{Nom}}</th>
+                                <th style="width:210px;">{{Title Color}}</th>
+                                <th style="width:210px;">{{Message Color}}</th>
+                                <th>{{URL}}</th>
+                                <th style="width:130px;">{{Action}}</th>
                             </tr>
                         </thead>
                         <tbody>

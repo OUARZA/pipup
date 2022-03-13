@@ -28,6 +28,7 @@ $("#table_cmd").sortable({
 
 /* Fonction permettant l'affichage des commandes dans l'équipement */
 function addCmdToTable(_cmd) {
+  console.log("_cmd:", _cmd);
   if (!isset(_cmd)) {
     var _cmd = {configuration: {}};
   }
@@ -36,17 +37,31 @@ function addCmdToTable(_cmd) {
   }
   var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
   tr += '<td>';
- 
+  tr += '<div class="input-group">';
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" style="display : none;">';
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" style="display : none;">';
 
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom de la commande}}">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" readonly=readonly placeholder="{{Nom de la commande}}">';
+  tr += '</div>';
   tr += '</td>';
-  // tr += '<td>';
-  // tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span>';
-  // tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span>';
-  // tr += '</td>';
+
+  tr += '<td>';
+  tr += '<div class="input-group">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="titleColor">';
+  tr += '</div>';
+  tr += '</td>';
+
+  tr += '<td>';
+  tr += '<div class="input-group">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="messageColor">';
+  tr += '</div>';
+  tr += '</td>';
+
+  tr += '<td>';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="url">';
+  tr += '</td>';
+
   tr += '<td>';
   if (is_numeric(_cmd.id)) {
      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';

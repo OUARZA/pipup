@@ -48,18 +48,18 @@ function addCmdToTable(_cmd) {
 
   tr += '<td>';
   tr += '<div class="input-group">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="titleColor">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="titleColor">';
   tr += '</div>';
   tr += '</td>';
 
   tr += '<td>';
   tr += '<div class="input-group">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="messageColor">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="messageColor">';
   tr += '</div>';
   tr += '</td>';
 
   tr += '<td>';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="url">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="url">';
   tr += '</td>';
 
   tr += '<td>';

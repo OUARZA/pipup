@@ -195,6 +195,17 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Taille de l'image}}</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <input type="number" class="eqLogicAttr form-control tooltips"
+                                                placeholder="240" 
+                                                data-l1key="configuration" data-l2key="imageSize" data-concat="1" />
+                                        </div>
+                                    </div>
+                                </div>
                             </fieldset>
                         </form>
                     </div>

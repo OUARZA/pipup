@@ -241,31 +241,29 @@ class pipupCmd extends cmd
         }
         unset($messageSize);
 
+        // imageSize
+        log::add('pipup', 'debug', ' Récupération imageSize', __FILE__);
+        $imageSize = $eqlogic->getConfiguration('imageSize');
+        if ($imageSize != '') {
+            if(filter_var($imageSize, FILTER_VALIDATE_INT))
+            {
+                $configuration->imageSize = $imageSize;
+            } else {
+                log::add('pipup', 'error', ' Mauvaise valeur de imageSize : '. $imageSize, __FILE__);
+                return; 
+            }
+        } else {
+            $configuration->imageSize = 240;
+        }
+        unset($imageSize);
+
         return $configuration;
     }
 
-    private function action($configuration, $options, $type='notify') {
+    function action($configuration, $options, $type='notify') {
+        $eqlogic = $this->getEqLogic();
+        $cmd = $eqlogic->getCmd(null, $type);
 
-        $titleColor = "#ff0000";
-        $messageColor = "#000000";
-        $backgroundColor = "#ffffff";
-        $media = "https://www.fenetre24.com/fileadmin/images/fr/porte-fenetre/pvc/lightbox/double-porte-fenetre.jpg";
-
-        switch ($type) {
-            case 'notify':
-                // $title = 'Notification';
-                $titleColor = "#000000";
-                $media = 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png';
-                break;
-            case 'alert':
-                // $title = 'Alerte';
-                $titleColor = "#ff0000";
-                $media ='https://www.pinclipart.com/picdir/big/94-941341_open-animated-gif-alert-icon-clipart.png';
-                break;
-            default:
-                // $title = 'Titre';
-                break;
-        }
         $title = $options['title'];
         $message = $options['message'];
 
@@ -281,19 +279,23 @@ class pipupCmd extends cmd
         $tmp->message = $message;
 
         // Paramétrage Commande
-        $tmp->titleColor = $titleColor;        
-        $tmp->messageColor = $messageColor;
+        $tmp->titleColor = $cmd->getConfiguration('titleColor');
+        $tmp->messageColor = $cmd->getConfiguration('messageColor');
 
         // Fixe
-        $tmp->backgroundColor = $backgroundColor;
+        $tmp->backgroundColor = '#ffffff';
 
-        $image = new stdClass();
-        $image->uri = $media;
-        $image->width = 240;
+        if (!empty($this->getConfiguration('url'))) {
+            $image = new stdClass();
+            $image->uri = $cmd->getConfiguration('url');
+            $image->width = $configuration->imageSize;
 
-        $tmp->media = new StdClass();
-        $tmp->media->image = $image;
+            $tmp->media = new StdClass();
+            $tmp->media->image = $image;
+        }
+
         $data = json_encode($tmp);
+        log::add('pipup', 'debug', ' data: '.$data, __FILE__);
 
         $tuCurl = curl_init();
         curl_setopt($tuCurl, CURLOPT_URL, "http://".$configuration->iptv.":7979/notify");
@@ -340,14 +342,7 @@ class pipupCmd extends cmd
         $configuration = $this->getMyConfiguration();
         log::add('pipup', 'debug', ' configuration :' . json_encode((array)$configuration));
 
-        switch ($this->getLogicalId()) {
-            case 'notify': 
-                $this->action($configuration, $_options, 'notify');
-                break;
-            case 'alert':
-                $this->action($configuration, $_options, 'alert');
-                break;
-        }
+        $this->action($configuration, $_options, $this->getLogicalId());
     }
 
     /*     * **********************Getteur Setteur*************************** */

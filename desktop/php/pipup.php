@@ -214,8 +214,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
             </div><!-- /.tabpanel #infotab-->
 
             <!-- Onglet des commandes de l'équipement -->
-            <div role="tabpanel" class="tab-pane" id="commandtab">
-                <br />
+            <div role="tabpanel" class="tab-pane" id="commandtab">                
+                <!-- <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br /><br /> -->
                 <div class="table-responsive">
                     <table id="table_cmd" class="table table-bordered table-condensed">
                         <thead>
@@ -224,7 +224,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <th style="width:210px;">{{Title Color}}</th>
                                 <th style="width:210px;">{{Message Color}}</th>
                                 <th>{{URL}}</th>
-                                <th style="width:130px;">{{Action}}</th>
+                                <th style="width:150px;">{{Action}}</th>
                             </tr>
                         </thead>
                         <tbody>

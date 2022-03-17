@@ -35,26 +35,32 @@ function addCmdToTable(_cmd) {
   if (!isset(_cmd.configuration)) {
     _cmd.configuration = {};
   }
+  if(!_cmd.logicalId){
+    _cmd.logicalId = 'mode';
+    _cmd.type = 'action';
+    _cmd.subType = 'message';
+  }
   var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
   tr += '<td>';
   tr += '<div class="input-group">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="type" style="display : none;">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="subType" style="display : none;">';
+  tr += '<span class="cmdAttr" data-l1key="id" style="display : none;"></span>';
+  tr += '<span class="cmdAttr" data-l1key="logicalId" style="display:none;"></span>';
+  tr += '<span class="type" type="' + init(_cmd.type) + '" style="display:none;">' + jeedom.cmd.availableType() + '</span>';
+  tr += '<span class="subType" subType="' + init(_cmd.subType) + '" style="display:none;"></span>';
 
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" readonly=readonly placeholder="{{Nom de la commande}}">';
+  tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom de la commande}}">';
   tr += '</div>';
   tr += '</td>';
 
   tr += '<td>';
   tr += '<div class="input-group">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="titleColor">';
+  tr += '<input class="cmdAttr form-control input-sm" placeholder="#000000" data-l1key="configuration" data-l2key="titleColor">';
   tr += '</div>';
   tr += '</td>';
 
   tr += '<td>';
   tr += '<div class="input-group">';
-  tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="messageColor">';
+  tr += '<input class="cmdAttr form-control input-sm" placeholder="#000000" data-l1key="configuration" data-l2key="messageColor">';
   tr += '</div>';
   tr += '</td>';
 
@@ -67,6 +73,7 @@ function addCmdToTable(_cmd) {
      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> Tester</a>';
   }
+  tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>'
   tr += '</tr>';
   $('#table_cmd tbody').append(tr);
   var tr = $('#table_cmd tbody tr').last();
@@ -100,127 +107,33 @@ $(".eqLogic").delegate(".listCmdInfo", 'click', function () {
   });
 });
 
-// ***** Pipups ****************
-/**
- * Bouton Ajout d'une ouverture
- */
-// $('#bt_addPipupEqLogic').on('click', function () {
-//   addConfPipups({});
-// });
+// $(".eqLogic").delegate(".listCmdAction", 'click', function () {
+//     //console.log("--------- listCmdAction");
+//     var type = $(this).attr('data-type');
+//     var el = $(this).closest('.' + type).find('.expressionAttr[data-l1key=cmd]');
 
-// $('#bt_addPipupCmd').on('click', function() {
-//   addCmdToTable({
-//     configuration: {
-//       period: 1
-//     }
+//     jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
+//         el.value(result.human);
+//         jeedom.cmd.displayActionOption(el.value(), '', function (html) {
+//           el.closest('.' + type).find('.actionOptions').html(html);
+//           taAutosize();
+//         });
+//     });
+//   });
+
+// $(".eqLogic").delegate(".listAction", 'click', function () {
+// 	//console.log("--------- listAction");
+//   var type = $(this).attr('data-type');
+//   var el = $(this).closest('.' + type).find('.expressionAttr[data-l1key=cmd]');
+
+//   jeedom.getSelectActionModal({}, function (result) {
+//     el.value(result.human);
+//     jeedom.cmd.displayActionOption(el.value(), '', function (html) {
+//       el.closest('.' + type).find('.actionOptions').html(html);
+//       taAutosize();
+//     });
 //   });
 // });
-
-// $("#div_confPipups").delegate('.bt_removeConfPipup', 'click', function () {
-//   $(this).closest('.confPipup').remove();
-// });
-
-// function addConfPipups(_Pipup) {
-//   if (!isset(_Pipup)) {
-//     _Pipup = {};
-//   }
-//   console.log("addConfPipups", _Pipup);
-//   var div = '<div class="confPipup">';
-
-//   div += '<div class="form-group">';
-//   div += '<label class="col-sm-3 control-label">{{Ouverture}}</label>';
-//   div += '<div class="col-sm-7">';
-//   div += '<div class="input-group">';
-//   div += '<span class="input-group-btn">';
-//   div += '<a class="btn btn-default bt_removeConfPipup roundedLeft" data-type=""><i class="fas fa-minus-circle"></i></a>';
-//   div += '</span>';
-//   div += '<input class="eqLogicAttr form-control expressionAttr tooltips" data-l1key="cmd" data-type="Pipup"/>';
-//   div += '<span class="input-group-btn">';
-//   div += '<a class="btn btn-default listCmdInfo"><i class="fa fa-list-alt"></i></a>';
-//   div += '</span>';
-//   div += '</div>';
-//   div += '</div>';
-//   div += '<div class="col-sm-1">';
-//   div += '<label class="checkbox-inline"><input type="checkbox" class="expressionAttr cmdInfo" data-l1key="invert"/>{{Inverser}}</label></span>';
-//   div += '</div>';
-//   div += '</div>';
-
-//   div += '</div>';
-//   $('#div_confPipups').append(div);
-//   $('#div_confPipups').find('.confPipup:last').setValues(_Pipup, '.expressionAttr');
-// }
-
-
-// **** Action ************
-/**
- * Bouton Ajout d'une action
- */
-// $('#bt_addActionEqLogic').on('click', function () {
-//   addConfActions({});
-// });
-
-// $("#div_confActions").delegate('.bt_removeConfAction', 'click', function () {
-//   $(this).closest('.confAction').remove();
-// });
-
-// function addConfActions(_action) {
-//   if (!isset(_action)) {
-//     _action = {};
-//   }
-//   if (!isset(_action.options)) {
-//     _action.options = {}
-//   }
-//   // console.log("addConfActions", _action);
-//   var div = '<div class="confAction">';
-//   div += '<div class="form-group">';
-//   div += '<label class="col-sm-1 control-label">{{Action}}</label>';
-//   div += '<div class="col-sm-4">';
-//   div += '<div class="input-group">';
-//   div += '<span class="input-group-btn">';
-//   div += '<a class="btn btn-default bt_removeConfAction btn-sm roundedLeft" data-type=""><i class="fas fa-minus-circle"></i></a>';
-//   div += '</span>';
-//   div += '<input class="expressionAttr form-control input-sm cmdAction" data-l1key="cmd" data-type="action" />';
-//   div += '<span class="input-group-btn">';
-//   div += '<a class="btn btn-default btn-sm listAction" data-type="confAction" title="{{Sélectionner un mot-clé}}"><i class="fas fa-tasks"></i></a>';
-//   div += '<a class="btn btn-default btn-sm listCmdAction roundedRight" data-type="confAction" title="{{Sélectionner la commande}}"><i class="fas fa-list-alt"></i></a>';
-//   div += '</span>';
-//   div += '</div>';
-//   div += '</div>';
-//   div += '<div class="col-sm-7 actionOptions">';
-//   div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
-//   div += '</div>';
-//   div += '</div>';
-//   $('#div_confActions').append(div);
-//   $('#div_confActions').find('.confAction:last').setValues(_action, '.expressionAttr');
-// }
-
-$(".eqLogic").delegate(".listCmdAction", 'click', function () {
-    //console.log("--------- listCmdAction");
-    var type = $(this).attr('data-type');
-    var el = $(this).closest('.' + type).find('.expressionAttr[data-l1key=cmd]');
-
-    jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
-        el.value(result.human);
-        jeedom.cmd.displayActionOption(el.value(), '', function (html) {
-          el.closest('.' + type).find('.actionOptions').html(html);
-          taAutosize();
-        });
-    });
-  });
-
-$(".eqLogic").delegate(".listAction", 'click', function () {
-	//console.log("--------- listAction");
-  var type = $(this).attr('data-type');
-  var el = $(this).closest('.' + type).find('.expressionAttr[data-l1key=cmd]');
-
-  jeedom.getSelectActionModal({}, function (result) {
-    el.value(result.human);
-    jeedom.cmd.displayActionOption(el.value(), '', function (html) {
-      el.closest('.' + type).find('.actionOptions').html(html);
-      taAutosize();
-    });
-  });
-});
 
 
 /*** Save ***/
@@ -231,12 +144,12 @@ function saveEqLogic(_eqLogic) {
   _eqLogic.configuration.Pipup = $('#div_confPipups .confPipup').getValues('.expressionAttr');
   _eqLogic.configuration.action = $('#div_confActions .confAction').getValues('.expressionAttr');
 
-  console.log('saveEqLogic:', _eqLogic);
+  // console.log('saveEqLogic:', _eqLogic);
   return _eqLogic;
 }
 
 function printEqLogic(_eqLogic) {
-  console.log('printEqLogic:', _eqLogic);
+  // console.log('printEqLogic:', _eqLogic);
 
   $('#div_confPipups').empty();
   if (isset(_eqLogic.configuration)) {

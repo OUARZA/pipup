@@ -271,12 +271,12 @@ class pipupCmd extends cmd
 
         // Paramétrage Commande
         $tmp->titleColor = $cmd->getConfiguration('titleColor');
-        if (empty($cmd->titleColor)) {
+        if (empty($tmp->titleColor)) {
             $tmp->titleColor= "#000000";
         }
 
         $tmp->messageColor = $cmd->getConfiguration('messageColor');
-        if (empty($cmd->messageColor)) {
+        if (empty($tmp->messageColor)) {
             $tmp->messageColor= "#000000";
         }
 

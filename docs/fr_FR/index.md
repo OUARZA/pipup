@@ -1,4 +1,4 @@
-# Plugin template
+# Plugin Pipup
 
 Plugin permettant de créer une notification sur Android TV via PiPup.
 

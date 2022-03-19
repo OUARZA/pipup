@@ -47,6 +47,9 @@ class pipup extends eqLogic
                     if (empty($cmd->getConfiguration('messageColor'))) {
                         $cmd->setConfiguration('messageColor', "#000000");
                     }
+                    if (empty($cmd->getConfiguration('backgroundColor'))) {
+                        $cmd->setConfiguration('backgroundColor', "#ffffff");
+                    }
                     if (empty($cmd->getConfiguration('url'))) {
                         $cmd->setConfiguration('url', 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png');
                     }
@@ -84,6 +87,7 @@ class pipup extends eqLogic
 
                 $notify->setConfiguration('titleColor', "#000000");
                 $notify->setConfiguration('messageColor', "#000000");
+                $notify->setConfiguration('backgroundColor', "#ffffff");
                 $notify->setConfiguration('url', 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png');
             }
             $notify->setEqLogic_id($this->getId());
@@ -103,6 +107,7 @@ class pipup extends eqLogic
 
                 $alert->setConfiguration('titleColor', "#ff0000");
                 $alert->setConfiguration('messageColor', "#000000");
+                $alert->setConfiguration('backgroundColor', "#ffffff");
                 $alert->setConfiguration('url', 'https://www.pinclipart.com/picdir/big/94-941341_open-animated-gif-alert-icon-clipart.png');
             }
             $alert->setEqLogic_id($this->getId());
@@ -280,8 +285,10 @@ class pipupCmd extends cmd
             $tmp->messageColor= "#000000";
         }
 
-        // Fixe
-        $tmp->backgroundColor = '#ffffff';
+        $tmp->backgroundColor = $cmd->getConfiguration('backgroundColor');
+        if (empty($tmp->backgroundColor)) {
+            $tmp->backgroundColor= "#ffffff";
+        }
 
         if (!empty($cmd->getConfiguration('url'))) {
             $image = new stdClass();

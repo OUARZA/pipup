@@ -1,9 +1,7 @@
-# Plugin Pipup
-
-Plugin permettant de créer une notification sur Android TV via PiPup.
+# Plugin PiPup
+Ce plugin permet de créer une notification sur Android TV via l'application [Android PiPup de rogro82](https://github.com/rogro82/PiPup).
 
 # Prérequis
-
 Le plugin est basé sur une application AndroidTV : PiPup. (https://github.com/rogro82/PiPup)
 
 - Installer sur la TV l'application PiPup.

@@ -34,6 +34,9 @@ Une fois dessus vous retrouvez alors la liste de vos équipements.
 ## Général
 
 Vous retrouvez ici toute la configuration de votre équipement :
+
+![Général](../images/Onglet_1.png)
+
 - Nom de l’équipement : nom de votre équipement AndroidTV.
 - Objet parent : indique l’objet parent auquel appartient l’équipement.
 - Catégorie : les catégories de l’équipement (il peut appartenir à plusieurs catégories).
@@ -43,6 +46,9 @@ Vous retrouvez ici toute la configuration de votre équipement :
 ## Informations
 
 Cet onglet permet de définir l'équipement :
+
+![Général](../images/Onglet_2.png)
+
 - IP TV : IP de l'équipement où afficher les notifications
 - Duration : Durée en seconde pendant laquelle la notification s'affiche. 30 secondes par défaut.
 - Position : Emplacement où s'afficheront les notifications. En bas à droite par défaut.
@@ -51,6 +57,10 @@ Cet onglet permet de définir l'équipement :
 - Taille de l'image : 240 par défaut
 
 ## Commandes
+
+Ci-dessous vous retrouvez la liste des commandes :
+
+![Commandes](../images/Onglet_3.png)
 
 Commandes créées pour voir des informations :
 - notify : affiche une notification de type Notify

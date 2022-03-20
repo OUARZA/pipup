@@ -1,13 +1,15 @@
-# Plugin Pipup
-
-Plugin permettant de créer une notification sur Android TV via PiPup.
+# Plugin PiPup
+Ce plugin permet de créer une notification sur Android TV via l'application [Android PiPup de rogro82](https://github.com/rogro82/PiPup).
 
 # Prérequis
-
 Le plugin est basé sur une application AndroidTV : PiPup. (https://github.com/rogro82/PiPup)
 
-En résumé :
-- Installer sur la TV l'application PiPup, 
+- Installer sur la TV l'application PiPup.
+- Activer le mode développeur sur la TV
+  Paramètres > Préférences > A propos
+  Cliquer plusieurs fois sur "Build" jusqu'à activer le mode développeur 
+
+Via PC ou MAC :
 - Sur son PC ou son MAC, il faut récupérer l'outil adb (https://developer.android.com/studio/releases/platform-tools)
 - Puis via une ligne de commande, se connecter à sa TV
   adb connect <IPTV>
@@ -15,8 +17,15 @@ En résumé :
   adb devices
 - Donner les droits d'afficher une popup sur la TV pour cette application :
   adb shell appops set nl.rogro82.pipup SYSTEM_ALERT_WINDOW allow
+  
+Via Smartphone Android :
+- Installer et ouvrir l'application Remote ADB Shell sur le smartphone.
+- Saisir l'adresse ip de l'Android TV et valider.
+- Accepter la connexion sur la TV.
+- Exécuter la commande appops set nl.rogro82.pipup SYSTEM_ALERT_WINDOW allow sur l'application du smartphone. 
+- Donner les droits d'afficher une popup sur la TV pour cette application.
 
-
+  
 # Configuration des équipements
 
 La configuration des équipements PiPup est accessible à partir du menu Plugins puis Communication.

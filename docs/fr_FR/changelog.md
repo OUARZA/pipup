@@ -1,4 +1,4 @@
-# Changelog plugin Pipup
+# Changelog plugin PiPup
 
 >**IMPORTANT**
 >

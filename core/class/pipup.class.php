@@ -21,51 +21,49 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class pipup extends eqLogic
 {
-     public function preSave()
+    public function preSave()
     {
         log::add('pipup', 'debug', 'preSave eqLogic');
-        $position = $this->getConfiguration('position'); 
+        $position = $this->getConfiguration('position');
 
         if (!is_numeric($position)) {
             $this->setConfiguration('position', 2);
         }
 
         $cmds = $this->getCmd();
-            foreach($cmds as $cmd) {
-                log::add('pipup', 'debug', 'foreach cmd getLogicalId: '.$cmd->getLogicalId());
-    
-                if ($cmd->getLogicalId() == 'notify') {
-                    log::add('pipup', 'debug', 'preSave cmd notify');
-        
-                    if (empty($cmd->getConfiguration('titleColor'))) {
-                        log::add('pipup', 'debug', 'preSave cmd. notify. avant titlecolor');
-        
-                        $cmd->setConfiguration('titleColor', "#000000");
-                        log::add('pipup', 'debug', 'preSave cmd. notify. apres titlecolor: '.$cmd->getConfiguration('titleColor'));
-    
-                    }
-                    if (empty($cmd->getConfiguration('messageColor'))) {
-                        $cmd->setConfiguration('messageColor', "#000000");
-                    }
-                    if (empty($cmd->getConfiguration('backgroundColor'))) {
-                        $cmd->setConfiguration('backgroundColor', "#ffffff");
-                    }
-                    if (empty($cmd->getConfiguration('url'))) {
-                        $cmd->setConfiguration('url', 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png');
-                    }
+        foreach ($cmds as $cmd) {
+            log::add('pipup', 'debug', 'foreach cmd getLogicalId: ' . $cmd->getLogicalId());
+
+            if ($cmd->getLogicalId() == 'notify') {
+                log::add('pipup', 'debug', 'preSave cmd notify');
+
+                if (empty($cmd->getConfiguration('titleColor'))) {
+                    log::add('pipup', 'debug', 'preSave cmd. notify. avant titlecolor');
+
+                    $cmd->setConfiguration('titleColor', "#000000");
+                    log::add('pipup', 'debug', 'preSave cmd. notify. apres titlecolor: ' . $cmd->getConfiguration('titleColor'));
                 }
-
-                //  $cmd->setLogicalId($cmd->getName());
-                //  log::add('pipup', 'debug', 'foreach cmd getEqLogic_id: '.$this->getLogicalId());
-                //  log::add('pipup', 'debug', 'foreach cmd getId: '.$this->getId());                 
-                //  log::add('pipup', 'debug', 'foreach cmd setEqLogic_id: '.$this->getLogicalId());
-
-                $cmd->setType('action');
-                $cmd->setSubType('message');
-
-                $cmd->save();
+                if (empty($cmd->getConfiguration('messageColor'))) {
+                    $cmd->setConfiguration('messageColor', "#000000");
+                }
+                if (empty($cmd->getConfiguration('backgroundColor'))) {
+                    $cmd->setConfiguration('backgroundColor', "#ffffff");
+                }
+                if (empty($cmd->getConfiguration('url'))) {
+                    $cmd->setConfiguration('url', 'https://www.pinclipart.com/picdir/big/85-851186_push-notifications-push-notification-icon-png-clipart.png');
+                }
             }
 
+            //  $cmd->setLogicalId($cmd->getName());
+            //  log::add('pipup', 'debug', 'foreach cmd getEqLogic_id: '.$this->getLogicalId());
+            //  log::add('pipup', 'debug', 'foreach cmd getId: '.$this->getId());                 
+            //  log::add('pipup', 'debug', 'foreach cmd setEqLogic_id: '.$this->getLogicalId());
+
+            $cmd->setType('action');
+            $cmd->setSubType('message');
+
+            $cmd->save();
+        }
     }
 
     public function postSave()
@@ -73,7 +71,7 @@ class pipup extends eqLogic
         // pipup_action
         log::add('pipup', 'debug', 'postSave eqLogic');
 
-        $cmdsCount= count($this->getCmd());
+        $cmdsCount = count($this->getCmd());
 
         if ($cmdsCount === 0) {
             // notify
@@ -116,7 +114,6 @@ class pipup extends eqLogic
             $alert->save();
             unset($alert);
         } else {
-            
         }
     }
 
@@ -126,7 +123,6 @@ class pipup extends eqLogic
 
     public function postUpdate()
     {
-        
     }
 
     public function preRemove()
@@ -135,13 +131,14 @@ class pipup extends eqLogic
 
     public function postRemove()
     {
-    }    
+    }
 }
 
 class pipupCmd extends cmd
 {
-    
-    public function preSave() {        
+
+    public function preSave()
+    {
     }
 
 
@@ -160,12 +157,11 @@ class pipupCmd extends cmd
         log::add('pipup', 'debug', ' Récupération iptv', __FILE__);
         $iptv = $eqlogic->getConfiguration('iptv');
         if ($iptv != '') {
-            if(filter_var($iptv, FILTER_VALIDATE_IP))
-            {
+            if (filter_var($iptv, FILTER_VALIDATE_IP)) {
                 $configuration->iptv = $iptv;
             } else {
-                log::add('pipup', 'error', ' Mauvaise valeur de iptv : '. $iptv, __FILE__);
-                return; 
+                log::add('pipup', 'error', ' Mauvaise valeur de iptv : ' . $iptv, __FILE__);
+                return;
             }
         } else {
             log::add('pipup', 'error', ' Pas de iptv', __FILE__);
@@ -177,12 +173,11 @@ class pipupCmd extends cmd
         log::add('pipup', 'debug', ' Récupération duration', __FILE__);
         $duration = $eqlogic->getConfiguration('duration');
         if ($duration != '') {
-            if(filter_var($duration, FILTER_VALIDATE_INT))
-            {
+            if (filter_var($duration, FILTER_VALIDATE_INT)) {
                 $configuration->duration = $duration;
             } else {
-                log::add('pipup', 'error', ' Mauvaise valeur de duration : '. $duration, __FILE__);
-                return; 
+                log::add('pipup', 'error', ' Mauvaise valeur de duration : ' . $duration, __FILE__);
+                return;
             }
         } else {
             $configuration->duration = 30;
@@ -192,13 +187,12 @@ class pipupCmd extends cmd
         // Position
         log::add('pipup', 'debug', ' Récupération position', __FILE__);
         $position = $eqlogic->getConfiguration('position');
-        if ($position != '') {            
-            if(filter_var($position, FILTER_VALIDATE_INT, ["options" => ["min_range"=>0,  "max_range" => 4]])  !== false)
-            {
+        if ($position != '') {
+            if (filter_var($position, FILTER_VALIDATE_INT, ["options" => ["min_range" => 0,  "max_range" => 4]])  !== false) {
                 $configuration->position = $position;
             } else {
-                log::add('pipup', 'error', ' Mauvaise valeur de position : '. $position, __FILE__);
-                return; 
+                log::add('pipup', 'error', ' Mauvaise valeur de position : ' . $position, __FILE__);
+                return;
             }
         } else {
             $configuration->position = 2; // BottomRight
@@ -209,28 +203,26 @@ class pipupCmd extends cmd
         log::add('pipup', 'debug', ' Récupération titleSize', __FILE__);
         $titleSize = $eqlogic->getConfiguration('titleSize');
         if ($titleSize != '') {
-            if(filter_var($titleSize, FILTER_VALIDATE_INT))
-            {
+            if (filter_var($titleSize, FILTER_VALIDATE_INT)) {
                 $configuration->titleSize = $titleSize;
             } else {
-                log::add('pipup', 'error', ' Mauvaise valeur de titleSize : '. $titleSize, __FILE__);
-                return; 
+                log::add('pipup', 'error', ' Mauvaise valeur de titleSize : ' . $titleSize, __FILE__);
+                return;
             }
         } else {
             $configuration->titleSize = 20;
         }
         unset($titleSize);
-        
+
         // messageSize
         log::add('pipup', 'debug', ' Récupération messageSize', __FILE__);
         $messageSize = $eqlogic->getConfiguration('messageSize');
         if ($messageSize != '') {
-            if(filter_var($messageSize, FILTER_VALIDATE_INT))
-            {
+            if (filter_var($messageSize, FILTER_VALIDATE_INT)) {
                 $configuration->messageSize = $messageSize;
             } else {
-                log::add('pipup', 'error', ' Mauvaise valeur de messageSize : '. $messageSize, __FILE__);
-                return; 
+                log::add('pipup', 'error', ' Mauvaise valeur de messageSize : ' . $messageSize, __FILE__);
+                return;
             }
         } else {
             $configuration->messageSize = 14;
@@ -241,12 +233,11 @@ class pipupCmd extends cmd
         log::add('pipup', 'debug', ' Récupération imageSize', __FILE__);
         $imageSize = $eqlogic->getConfiguration('imageSize');
         if ($imageSize != '') {
-            if(filter_var($imageSize, FILTER_VALIDATE_INT))
-            {
+            if (filter_var($imageSize, FILTER_VALIDATE_INT)) {
                 $configuration->imageSize = $imageSize;
             } else {
-                log::add('pipup', 'error', ' Mauvaise valeur de imageSize : '. $imageSize, __FILE__);
-                return; 
+                log::add('pipup', 'error', ' Mauvaise valeur de imageSize : ' . $imageSize, __FILE__);
+                return;
             }
         } else {
             $configuration->imageSize = 240;
@@ -256,7 +247,8 @@ class pipupCmd extends cmd
         return $configuration;
     }
 
-    function action($configuration, $options, $type='notify') {
+    function action($configuration, $options, $type = 'notify')
+    {
         $eqlogic = $this->getEqLogic();
         $cmd = $eqlogic->getCmd(null, $type);
 
@@ -265,7 +257,7 @@ class pipupCmd extends cmd
 
         $tmp = new stdClass();
         // Paramétrage Generique
-        $tmp->duration= $configuration->duration;
+        $tmp->duration = $configuration->duration;
         $tmp->position = $configuration->position;
         $tmp->titleSize = $configuration->titleSize;
         $tmp->messageSize = $configuration->messageSize;
@@ -277,17 +269,17 @@ class pipupCmd extends cmd
         // Paramétrage Commande
         $tmp->titleColor = $cmd->getConfiguration('titleColor');
         if (empty($tmp->titleColor)) {
-            $tmp->titleColor= "#000000";
+            $tmp->titleColor = "#000000";
         }
 
         $tmp->messageColor = $cmd->getConfiguration('messageColor');
         if (empty($tmp->messageColor)) {
-            $tmp->messageColor= "#000000";
+            $tmp->messageColor = "#000000";
         }
 
         $tmp->backgroundColor = $cmd->getConfiguration('backgroundColor');
         if (empty($tmp->backgroundColor)) {
-            $tmp->backgroundColor= "#ffffff";
+            $tmp->backgroundColor = "#ffffff";
         }
 
         if (!empty($cmd->getConfiguration('url'))) {
@@ -300,10 +292,10 @@ class pipupCmd extends cmd
         }
 
         $data = json_encode($tmp);
-        log::add('pipup', 'debug', ' data: '.$data, __FILE__);
+        log::add('pipup', 'debug', ' data: ' . $data, __FILE__);
 
         $tuCurl = curl_init();
-        curl_setopt($tuCurl, CURLOPT_URL, "http://".$configuration->iptv.":7979/notify");
+        curl_setopt($tuCurl, CURLOPT_URL, "http://" . $configuration->iptv . ":7979/notify");
         // curl_setopt($tuCurl, CURLOPT_PORT , 7979);
         curl_setopt($tuCurl, CURLOPT_VERBOSE, 0);
         curl_setopt($tuCurl, CURLOPT_HEADER, 0);
@@ -315,10 +307,11 @@ class pipupCmd extends cmd
         // curl_setopt($tuCurl, CURLOPT_SSL_VERIFYPEER, 1);
         curl_setopt($tuCurl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($tuCurl, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($tuCurl, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Content-length: ".strlen($data)));
+        curl_setopt($tuCurl, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Content-length: " . strlen($data)));
 
         $tuData = curl_exec($tuCurl);
-        if(!curl_errno($tuCurl)) {
+        $errno = curl_errno($tuCurl);
+        if (!$errno) {
             $info = curl_getinfo($tuCurl);
             // log::add('pipup', 'info', 'info : ' . json_encode($info), __FILE__);
 
@@ -328,17 +321,20 @@ class pipupCmd extends cmd
             } else {
                 log::add('pipup', 'error', ' data : ' . $tuData, __FILE__);
             }
+        } elseif ($errno == 7) {
+            // CURLE_COULDNT_CONNECT
+            log::add('pipup', 'info', 'Connexion impossible sur :' . $configuration->iptv, __FILE__);
         } else {
-            log::add('pipup', 'error', curl_error($tuCurl), __FILE__);
+            log::add('pipup', 'error', 'erreurNo: ' . curl_errno($tuCurl) . ' : ' . curl_error($tuCurl), __FILE__);
         }
 
         curl_close($tuCurl);
-    } 
+    }
 
     // Exécution d'une commande  
     public function execute($_options = array())
     {
-        log::add('pipup', 'info', ' **** execute ****'.$this->getLogicalId(), __FILE__);
+        log::add('pipup', 'info', ' **** execute ****' . $this->getLogicalId(), __FILE__);
 
         $eqlogic = $this->getEqLogic(); //récupère l'éqlogic de la commande $this
         log::add('pipup', 'info', ' Objet : ' . $eqlogic->getName(), __FILE__);

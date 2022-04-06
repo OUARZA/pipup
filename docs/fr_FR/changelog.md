@@ -1,4 +1,4 @@
-# Changelog plugin Gestion Ouvrants
+# Changelog plugin PiPup
 
 >**IMPORTANT**
 >
